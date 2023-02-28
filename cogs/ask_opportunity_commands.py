@@ -91,7 +91,7 @@ class OpportunityCommands(commands.Cog):
     self.bot = bot
 
   @commands.slash_command(description='Ask for opportunities')
-  async def ask_opportunity(self, ctx: discord.ApplicationContext):
+  async def seek_opportunity(self, ctx: discord.ApplicationContext):
     a = AskOpportunity('Ask for opprtunity', self.bot, ctx)
     await ctx.send_modal(a)
     edit_datajson("opportunity_data", "added_by", ctx.author.id)

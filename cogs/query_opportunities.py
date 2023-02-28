@@ -114,7 +114,7 @@ class QueryCommands(commands.Cog):
     super().__init__()
     self.bot = bot
 
-  @commands.slash_command(description='Ask for opportunities')
+  @commands.slash_command(description='Search for opportunities')
   async def search_opportunity(self, ctx: discord.ApplicationContext):
     a = DropdownViewQueryJobs(self.bot, ctx)
     await ctx.respond(view=a)
