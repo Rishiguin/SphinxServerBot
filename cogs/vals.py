@@ -1,8 +1,8 @@
 #⚠️⚠️warning each dropdown in discord can only have 25 values max⚠️⚠️
 #so don't add more than 25 values in the arrays associated with any dropdown
 
-JOB_CHANNEL_ID=1080040642522136626
-OPPORTUNITY_ASKING_CHANNEL_ID=1080040679591399434
+JOB_CHANNEL_ID=1080040642522136626 #channel id where job/opportunities will be sent
+OPPORTUNITY_ASKING_CHANNEL_ID=1080040679591399434 #channel for seeking opportunities
 
 ROLES = {   #associated with type dropdown
   "frontend": {
