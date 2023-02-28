@@ -14,6 +14,8 @@ TEST_GUILD = discord.Object('731060009659662406')
 #buttons work
 #dropdown callback work now
 
+#⚠️⚠️⚠️⚠️ THIS IS OUT OF VERSION NOW, I SPARATED INTO INTO DIFFERENT COMMAND FILES
+
 
 class MakeJobMessage():
   def __init__(self,bot: discord.Bot):
@@ -259,5 +261,4 @@ class mainbot(commands.Cog):
     await ctx.send_modal(a)
     edit_datajson("opportunity_data","added_by",ctx.author.id)
 
-def setup(bot):
-  bot.add_cog(mainbot(bot))
+
