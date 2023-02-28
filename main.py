@@ -2,17 +2,24 @@ import discord
 import os
 import asyncio
 from keep_alive import keep_alive
+from discord.ext import commands
 
-bot = discord.Bot()
+bot = discord.Bot(command_prefix='%',help_command=commands.DefaultHelpCommand())
 bot.author_id = 576372354670919690
 
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
-@bot.slash_command()
-async def helloji(ctx):
-    await ctx.respond("Hello!")
+@bot.slash_command(description = "See the different commands")
+async def help(ctx):
+    await ctx.respond("`/seek_opportunity` : introduce and ask for opportunities\n\n`/add_opportunity` : add a job or opportunity\n\n`/search_opportunity` : search for opportunities")
+
+@bot.event
+async def on_message(ctx):
+  if ctx.channel.id == 1069614589114855526: #welcome channel id
+    await ctx.add_reaction("👋")
+    await ctx.create_thread(name=f"Hi there {ctx.author}, welcome to Indian Tech Discord")
 
 extensions = [
     'cogs.cog_manager',
