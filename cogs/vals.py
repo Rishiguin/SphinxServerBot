@@ -45,10 +45,6 @@ ROLES = {   #associated with type dropdown
     "description": "",
     "role_id": 1069649080126554112
   },
-  "test role": {
-    "description": "",
-    "role_id": 1080152586113527818
-  },
 }
 
 #⚠️remember!!! max 25 in one dropdown

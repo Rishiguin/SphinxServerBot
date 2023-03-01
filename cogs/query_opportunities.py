@@ -4,8 +4,8 @@ from discord.ext import commands
 from json_edit import edit_datajson, get_datajson
 from vals import OPPORTUNITY_ASKING_CHANNEL_ID, ROLES, TOPICS
 import datetime
-from sqlite_functions import get_jobs
-
+from sqlite_functions import get_jobs, get_count
+import json
 
 class SendQueryResult():
 
@@ -18,7 +18,7 @@ class SendQueryResult():
     print('compensation tags : ', self.compensation_tags)
     print('type_tag ',self.type_tag)
 
-  async def make_message(self):
+  async def make_message(self,mssg: discord.Interaction):
     
     q = "type = '{}' AND compensation IN {}".format(
       self.type_tag, tuple(self.compensation_tags) if len(self.compensation_tags)>1 else f'("{self.compensation_tags[0]}")')
@@ -40,13 +40,9 @@ class SendQueryResult():
       description=description,
       color=discord.Colour.blurple(),
     )
-    embed.set_footer(text="by sphinx bot")
-    embed.set_image(
-      url=
-      'https://cdn.discordapp.com/attachments/560753089179680768/594957849797460177/Epic_gif-1.gif'
-    )
+    embed.set_footer(text="via pyramid")
 
-    await self.ctx.send(embed=embed)
+    await mssg.edit_original_response(embed=embed)
 
 
 class JobTypeDropdown(Select):
@@ -55,8 +51,14 @@ class JobTypeDropdown(Select):
     self.bot = bot
     roles = ROLES.keys()
     options = []
+    count=json.loads(get_count())
     for role in roles:
-      options.append(discord.SelectOption(label=role))
+      print("role  ",role)
+      try: 
+        description = (str(count[role])).replace('{','').replace('}','')
+      except Exception :
+        description = "No opportunities currently listed"
+      options.append(discord.SelectOption(label=role,description=description))
 
     super().__init__(
       placeholder="Type",
@@ -87,13 +89,23 @@ class CompensationDropdown(Select):
       options=options,
     )
 
+    
   async def callback(self, interaction: discord.Interaction):
-    await interaction.response.send_message('Searching...', ephemeral=True)
+    embed = discord.Embed(
+      title="Searching...",
+      color=discord.Colour.red(),
+    )
+    embed.set_image(
+      url=
+      'https://cdn.discordapp.com/attachments/560753089179680768/594957849797460177/Epic_gif-1.gif'
+    )
+    embed.set_footer(text="via pyramid")
+    msg=await interaction.response.send_message(embed=embed, ephemeral=True)
     edit_datajson("query_data", "compensation_tags",
                   tuple(self.values))  #tuple because python can't hash list
 
     query = SendQueryResult(self.bot, self.ctx)
-    await query.make_message()
+    await query.make_message(msg)
 
 
 class DropdownViewQueryJobs(discord.ui.View):
@@ -117,7 +129,7 @@ class QueryCommands(commands.Cog):
   @commands.slash_command(description='Search for opportunities')
   async def search_opportunity(self, ctx: discord.ApplicationContext):
     a = DropdownViewQueryJobs(self.bot, ctx)
-    await ctx.respond(view=a)
+    await ctx.respond(view=a, ephemeral=True)
 
 
 def setup(bot):

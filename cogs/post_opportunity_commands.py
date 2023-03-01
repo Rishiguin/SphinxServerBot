@@ -46,15 +46,11 @@ class MakeJobMessage():
     for quality in self.lookingfor:
       lookingfor_msg+=f'`{quality.strip()}`\n '
       
-    embed.set_footer(text="by sphinx bot")
+    embed.set_footer(text="via pyramid")
     embed.add_field(name="Looking for people who are :",value=lookingfor_msg)
     embed.add_field(name="Added by:", value=self.author_mention,inline=False)
     embed.add_field(name="Type:", value=self.role_mention)
     embed.add_field(name="$$$:", value=self.compensation)
-    embed.set_image(
-      url=
-      'https://cdn.discordapp.com/attachments/560753089179680768/594957849797460177/Epic_gif-1.gif'
-    )
 
     a = await self.channel.send(embed=embed)
     await a.add_reaction(emoji="👋")

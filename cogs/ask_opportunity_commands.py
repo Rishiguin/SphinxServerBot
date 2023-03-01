@@ -27,9 +27,9 @@ class MakeOpportunityMessage():
                           color=discord.Colour.blurple(),
                           timestamp=datetime.datetime.utcnow())
     embed.set_author(name=author_info)
-    embed.set_footer(text="by sphinx bot")
+    embed.set_footer(text="via pyramid")
     embed.set_thumbnail(url=author_info.avatar)
-    embed.add_field(name="Looking for : ", value=lookingfor)
+    embed.add_field(name="\nLooking for : \n", value=lookingfor)
     embed.set_image(
       url=
       'https://cdn.discordapp.com/attachments/560753089179680768/594957849797460177/Epic_gif-1.gif'

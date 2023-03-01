@@ -1,5 +1,5 @@
 import sqlite3
-    
+import json
 
 def add_job(author_id:int, type:str, about:str, description:str, compensation:str, thread_link:str):
   try:
@@ -35,7 +35,31 @@ def get_jobs(query):
     return (a if len(a)>0 else 400)
   except Exception as e:
     print(e)
+    
+def get_count():
+    try:
+        conn = sqlite3.connect('jobs_and_opportunities.db')
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT type,compensation FROM created_jobs"
+          )
+        jobs=cursor.fetchall()
+        conn.close()
+        print(jobs)
 
+        counts = {}
+        for job in jobs:
+            job_type, compensation_tag = job[0], job[1]
+            if job_type not in counts:
+                counts[job_type] = {}
+            if compensation_tag not in counts[job_type]:
+                counts[job_type][compensation_tag] = 0
+            counts[job_type][compensation_tag] += 1
+            json_str = json.dumps(counts)
+        return json_str
+
+    except Exception as e:
+      print(e)
 conn = sqlite3.connect('jobs_and_opportunities.db')
 c = conn.cursor()
 c.execute("""
