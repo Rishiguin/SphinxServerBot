@@ -13,7 +13,7 @@ async def on_ready():
 
 @bot.slash_command(description = "See the different commands")
 async def help(ctx):
-    await ctx.respond("`/seek_opportunity` : introduce and ask for opportunities\n\n`/add_opportunity` : add a job or opportunity\n\n`/search_opportunity` : search for opportunities")
+    await ctx.respond("`/seek_opportunity` : introduce and ask for opportunities\n\n`/add_opportunity` : add a job or opportunity\n\n`/search_opportunity` : search for opportunities\n\n `/event_create` : create an event")
 
 @bot.event
 async def on_message(ctx):
@@ -25,7 +25,8 @@ extensions = [
     'cogs.cog_manager',
     'cogs.ask_opportunity_commands',
     'cogs.post_opportunity_commands',
-    'cogs.query_opportunities'
+    'cogs.query_opportunities',
+    'cogs.event_commands'
   
 ]
 

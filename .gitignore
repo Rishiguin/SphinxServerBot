@@ -1,2 +1,5 @@
 __pycache__/
 venv/
+cogs/query_data.json
+cogs/opportunity_data.json
+cogs/job_data.json
