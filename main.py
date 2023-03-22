@@ -3,6 +3,7 @@ import os
 import asyncio
 from keep_alive import keep_alive
 from discord.ext import commands
+from cogs.vals import GENERAL_CHANNEL_ID
 
 bot = discord.Bot(command_prefix='%',help_command=commands.DefaultHelpCommand())
 bot.author_id = 576372354670919690
@@ -20,6 +21,13 @@ async def on_message(ctx):
   if ctx.channel.id == 1069614589114855526: #welcome channel id
     await ctx.add_reaction("👋")
     await ctx.create_thread(name=f"Hi there {ctx.author}, welcome to Indian Tech Discord")
+
+
+
+@bot.event
+async def on_message(ctx):
+  if ctx.channel.id == GENERAL_CHANNEL_ID:
+    await ctx.create_thread(name=f"---Discussion--->")
 
 extensions = [
     'cogs.cog_manager',
